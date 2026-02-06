@@ -1,11 +1,11 @@
 ---
 name: tdd
-description: Test-Driven Development workflow with vitest and real database. Use when implementing features, fixing bugs, or addressing coverage gaps.
+description: Test-Driven Development workflow with vitest. Use when implementing features, fixing bugs, or addressing coverage gaps.
 ---
 
 # Test-Driven Development (TDD) Skill
 
-This skill guides you through test-driven development with 100% coverage using vitest and real database testing.
+This skill guides you through test-driven development with 100% coverage using vitest.
 
 ## When to Use
 
@@ -52,23 +52,9 @@ src/services/
 ## Test Template
 
 ```typescript
-import { describe, it, expect, beforeEach, afterAll } from 'vitest'
-import {
-  getTestDb,
-  cleanupTestDatabase,
-  closeTestDatabase,
-} from '../test/db-helpers'
+import { describe, it, expect, beforeEach } from 'vitest'
 
 describe('ExampleService', () => {
-  beforeEach(async () => {
-    await cleanupTestDatabase() // Clean slate for each test
-  })
-
-  afterAll(async () => {
-    await cleanupTestDatabase()
-    await closeTestDatabase() // Close connections when done
-  })
-
   describe('createExample', () => {
     it('creates an example with required fields', async () => {
       // Arrange
@@ -80,19 +66,9 @@ describe('ExampleService', () => {
       // Act
       const result = await exampleService.create(input)
 
-      // Assert - verify return value
+      // Assert - verify actual values
       expect(result.id).toBeDefined()
       expect(result.name).toBe('Test Example')
-
-      // Assert - verify database state
-      const db = getTestDb()
-      const dbRecord = await db
-        .selectFrom('example')
-        .where('id', '=', result.id)
-        .selectAll()
-        .executeTakeFirstOrThrow()
-
-      expect(dbRecord.name).toBe('Test Example')
     })
   })
 })
@@ -100,20 +76,7 @@ describe('ExampleService', () => {
 
 ## Key Testing Principles
 
-### 1. Use Real Database
-
-Do NOT mock Kysely or database connections:
-
-```typescript
-// Correct - use real test database
-const db = getTestDb()
-const result = await db.selectFrom('user').selectAll().execute()
-
-// Wrong - mocking database
-const mockDb = { selectFrom: vi.fn() }
-```
-
-### 2. Verify Actual Values
+### 1. Verify Actual Values
 
 Don't just check existence - verify expected values:
 
@@ -128,26 +91,7 @@ expect(result).toBeDefined()
 expect(result.title).toBeTruthy()
 ```
 
-### 3. Verify Database State
-
-Don't trust return values alone - query the database:
-
-```typescript
-// After calling service function
-const result = await userService.updateEmail(userId, 'new@email.com')
-
-// Verify in database
-const db = getTestDb()
-const dbUser = await db
-  .selectFrom('user')
-  .where('id', '=', userId)
-  .selectAll()
-  .executeTakeFirstOrThrow()
-
-expect(dbUser.email).toBe('new@email.com')
-```
-
-### 4. Test Error Cases
+### 2. Test Error Cases
 
 Cover failure modes, not just happy paths:
 
@@ -242,11 +186,10 @@ Write THREE tests:
 
 Bug fixes require proving the bug exists before fixing it:
 
-1. **Query actual data** - Check database/logs to understand real state
-2. **Write a FAILING test** - Test must fail because of the bug
-3. **Watch it fail** - Confirms test catches the bug
-4. **Implement the fix** - Minimal change to pass test
-5. **Watch it pass** - Confirms fix works
+1. **Write a FAILING test** - Test must fail because of the bug
+2. **Watch it fail** - Confirms test catches the bug
+3. **Implement the fix** - Minimal change to pass test
+4. **Watch it pass** - Confirms fix works
 
 ## Running Tests
 
@@ -290,11 +233,10 @@ Before committing:
 
 ## Anti-Patterns to Avoid
 
-1. **Mocking database connections** - Use real test database
-2. **Testing only happy paths** - Cover error cases
-3. **Weak assertions** - Avoid `toBeDefined()`, `toBeTruthy()` alone
-4. **Skipping tests** - No `.skip` or commenting out
-5. **Writing implementation before tests** - Tests come first
-6. **Running `bun test:run` instead of `bun test:coverage`** - Pre-commit will fail
-7. **Using istanbul ignore comments** - This violates "never relax guardrails"
-8. **Not testing both branches** - Every `?` or `??` needs at least 2 tests
+1. **Testing only happy paths** - Cover error cases
+2. **Weak assertions** - Avoid `toBeDefined()`, `toBeTruthy()` alone
+3. **Skipping tests** - No `.skip` or commenting out
+4. **Writing implementation before tests** - Tests come first
+5. **Running `bun test:run` instead of `bun test:coverage`** - Pre-commit will fail
+6. **Using istanbul ignore comments** - This violates "never relax guardrails"
+7. **Not testing both branches** - Every `?` or `??` needs at least 2 tests
