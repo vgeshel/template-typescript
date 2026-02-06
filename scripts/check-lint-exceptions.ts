@@ -48,7 +48,6 @@ const TYPESCRIPT_PATTERNS = [
 const EXCLUDED_FILE_PATTERNS = [
   /check-lint-exceptions\.ts$/,
   /check-lint-exceptions\.test\.ts$/,
-  /src\/server\/db\.ts$/, // JSONB parse helpers are the only allowed eslint-disable
   /\.md$/, // Documentation files may reference these patterns
 ] as const
 

@@ -10,10 +10,9 @@ This file provides guidance to Claude Code (claude.ai/code) and other AI coding 
 
 This project includes skills for procedural guidance. Use these when performing specific tasks:
 
-| Skill                | When to Use                                     |
-| -------------------- | ----------------------------------------------- |
-| `database-migration` | Creating or modifying database schema           |
-| `tdd`                | ANY code change: features, bug fixes, refactors |
+| Skill | When to Use                                     |
+| ----- | ----------------------------------------------- |
+| `tdd` | ANY code change: features, bug fixes, refactors |
 
 ## Agentic Coding Principles
 
@@ -34,22 +33,10 @@ These rules apply to ALL code. No exceptions.
 ### Type Safety
 
 - **NO `any` types** - Strictly prohibited everywhere
-- **NO `as` casts** - ESLint will fail the build. Exceptions only for JSONB reads using `parseJsonbRecord()`/`parseJsonbArray()`
-- **Zod for external data** - Use `schema.parse()` for client input, API responses, JSONB reads
+- **NO `as` casts** - ESLint will fail the build. Use Zod validation or type guards instead
+- **Zod for external data** - Use `schema.parse()` for client input, API responses
 - **Run `bun typecheck` after EVERY change**
 - **Run `bun lint` after EVERY change**
-
-### Database
-
-- **ALL operations in transactions** - `db.transaction().execute(async (trx) => {...})`
-- **Use `jsonb()` helper for JSONB writes** - Import from `@/server/db`
-- **Use `.returningAll()` pattern** - Not insert-then-select
-- **Normalized schema** - No denormalized/redundant data
-- **UUID primary keys** - Single-column `id`, no natural/composite keys
-- **FK constraints** - RESTRICT mode, no cascading deletes
-- **Timestamps** - `created_at` required, `updated_at` for mutable tables
-- **Never set `created_at`** - Let database default handle it
-- **Set `updated_at` on UPDATE** - Use `sql\`now()\`` since no trigger exists
 
 ### TDD (Test-Driven Development)
 
@@ -70,7 +57,6 @@ These rules apply to ALL code. No exceptions.
 
 **Testing standards:**
 
-- **Real database** - No mocking Kysely/connections
 - **Verify actual values** - Not just existence/shape
 - **All tests must pass** - Run `bun test:run` before committing
 
@@ -103,12 +89,7 @@ bun format           # Prettier
 bun test             # Watch mode
 bun test:run         # CI mode (run before commit)
 
-# Database
-bun db:migrate       # Run migrations
-bun db:codegen       # Regenerate types (ALWAYS after migrations)
-
 # Workflows
-bun db:migrate && bun db:codegen && bun typecheck  # After migrations
 bun typecheck && bun lint && bun test:run          # Before commit
 ```
 
@@ -118,7 +99,7 @@ bun typecheck && bun lint && bun test:run          # Before commit
 
 - **Runtime**: Bun (not Node.js)
 - **Frontend**: Next.js 16 (App Router) + React 19 + Tailwind CSS
-- **Backend**: tRPC + PostgreSQL with Kysely
+- **Backend**: tRPC
 - **Validation**: Zod + TypeScript strict mode
 
 ### Directory Structure
@@ -127,37 +108,23 @@ bun typecheck && bun lint && bun test:run          # Before commit
 app/                    # Next.js App Router
 src/
 ├── server/
-│   ├── db.ts          # Kysely client + jsonb helper
-│   ├── db-types.ts    # AUTO-GENERATED (never edit)
 │   └── trpc.ts        # tRPC router
 ├── lib/               # Shared utilities
 ├── components/        # React components
 └── test/              # Test utilities
-migrations/            # TypeScript migrations
 ```
 
 ### Data Flow
 
 ```
-Browser → tRPC client → src/server/trpc.ts → src/services/* → Database
+Browser → tRPC client → src/server/trpc.ts → src/services/*
 ```
 
 ### Critical Patterns
-
-**JSONB Handling**:
-
-```typescript
-// Writing - use jsonb() helper
-await trx.insertInto('t').values({ data: jsonb({ key: 'value' }) })
-
-// Reading - use parse utilities
-const data = parseJsonbRecord(row.data)
-```
 
 **Logging**: Use pino, never console.log
 
 ## Dependencies Documentation
 
-- Kysely: https://kysely.dev/llms-full.txt
 - Next.js: https://nextjs.org/docs/llms-full.txt
 - Zod: https://zod.dev/llms.txt
