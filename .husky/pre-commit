@@ -7,4 +7,6 @@ bun lint
 # Prevents lowering of code coverage requirements
 bun run scripts/check-coverage-thresholds.ts | bunx pino-pretty
 
+bun test:coverage
+
 bunx lint-staged
