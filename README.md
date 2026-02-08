@@ -4,7 +4,6 @@ A production-ready template for TypeScript applications with:
 
 - **TypeScript** strict mode with comprehensive ESLint rules
 - **Next.js 16** with App Router
-- **PostgreSQL** with Kysely (type-safe queries)
 - **tRPC** for type-safe APIs
 - **Vitest** for testing with real database
 - **Pre-commit hooks** for quality assurance
@@ -82,7 +81,6 @@ bun db:codegen       # Regenerate TypeScript types
 │   ├── globals.css        # Tailwind CSS
 │   ├── layout.tsx         # Root layout
 │   └── page.tsx           # Home page
-├── migrations/            # Kysely migrations
 ├── scripts/               # Build/dev scripts
 ├── src/
 │   ├── components/        # React components
@@ -91,8 +89,6 @@ bun db:codegen       # Regenerate TypeScript types
 │   │   ├── providers.tsx  # React Query provider
 │   │   └── trpc.ts        # tRPC client
 │   ├── server/
-│   │   ├── db.ts          # Kysely database client
-│   │   ├── db-types.ts    # Generated types (don't edit)
 │   │   └── trpc.ts        # tRPC router
 │   └── test/              # Test utilities
 ├── .claude/               # Claude Code configuration
@@ -109,23 +105,6 @@ bun db:codegen       # Regenerate TypeScript types
 - **No `any` types** - Enforced by ESLint
 - **No `as` casts** - Use Zod validation instead
 - **Generated database types** - Run `bun db:codegen` after migrations
-
-### Database Patterns
-
-```typescript
-// All operations in transactions
-await db.transaction().execute(async (trx) => {
-  // Your queries here
-})
-
-// JSONB writes
-import { jsonb } from '@/server/db'
-await trx.insertInto('table').values({ data: jsonb({ key: 'value' }) })
-
-// JSONB reads
-import { parseJsonbRecord } from '@/server/db'
-const data = parseJsonbRecord(row.data)
-```
 
 ### Pre-commit Hooks
 

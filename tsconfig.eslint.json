@@ -9,7 +9,6 @@
     "migrations/**/*",
     "scripts/**/*",
     ".claude/**/*",
-    "kysely.config.ts",
     "next.config.ts",
     "next-env.d.ts"
   ]
