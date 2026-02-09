@@ -14,6 +14,8 @@ export default [
       'eslint.config.*',
       'vitest.config.ts',
       '.next/**',
+      '.claude/skills/**',
+      '.codex/skill/**',
     ],
   },
 
