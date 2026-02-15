@@ -67,7 +67,6 @@ export async function main(testConfig?: { default: unknown }): Promise<void> {
 }
 
 /* istanbul ignore next -- entrypoint with unreliable async timing in tests */
-// eslint-disable-next-line n/no-process-env -- script entrypoint guard
 if (import.meta.main || process.env.COVERAGE_THRESHOLDS_RUN_MAIN === 'true') {
   main()
     .catch(

@@ -220,6 +220,8 @@ export default defineConfig(
       'actions/shared/env.ts',
       'actions/shared/tests/env.test.ts',
       'playwright/playwright.config.ts',
+      'src/lib/logger.ts',
+      'scripts/**/*.ts',
     ],
     rules: {
       'n/no-process-env': 'off',
