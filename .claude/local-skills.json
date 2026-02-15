@@ -1,0 +1,29 @@
+{
+  "skills": {
+    "brainstorming": {
+      "source": "superpowers@obra/superpowers",
+      "ref": "HEAD",
+      "sha": "a98c5dfc9de0df5318f4980d91d24780a566ee60"
+    },
+    "systematic-debugging": {
+      "source": "superpowers@obra/superpowers",
+      "ref": "HEAD",
+      "sha": "a98c5dfc9de0df5318f4980d91d24780a566ee60"
+    },
+    "test-driven-development": {
+      "source": "superpowers@obra/superpowers",
+      "ref": "HEAD",
+      "sha": "a98c5dfc9de0df5318f4980d91d24780a566ee60"
+    },
+    "managing-local-skills": {
+      "source": "local-skills@vgeshel/local-skills",
+      "ref": "HEAD",
+      "sha": "c10c6167a5f5432139e787efd8c82de328f333f3"
+    },
+    "verification-before-completion": {
+      "source": "superpowers@obra/superpowers",
+      "ref": "HEAD",
+      "sha": "a98c5dfc9de0df5318f4980d91d24780a566ee60"
+    }
+  }
+}

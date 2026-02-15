@@ -1,0 +1,19 @@
+{
+  "skills": {
+    "brainstorming": {
+      "contentHash": "a61faadd0e0cb27e638bae937fbda733b904d6e678bb98fb1d827178f339f1df"
+    },
+    "systematic-debugging": {
+      "contentHash": "45019b204ee8aea42c2f13578e38daedd1e795b4fc899b24617f6bc55885f715"
+    },
+    "test-driven-development": {
+      "contentHash": "1977772ac4c51aa121fe68393099fd6fc73516dfc3083772342043860fed1b3c"
+    },
+    "managing-local-skills": {
+      "contentHash": "3a69f51423f33798dc60986680f4aa60941fdf7e05648b531f9cdf68028e1ea8"
+    },
+    "verification-before-completion": {
+      "contentHash": "363a6828d12020555bfc8cb802237c8d97fdec3d457c06de693ae3137e313cbe"
+    }
+  }
+}
