@@ -4,11 +4,13 @@
     "noEmit": true
   },
   "include": [
-    "src/**/*",
+    "*.ts",
     "app/**/*",
-    "migrations/**/*",
+    "src/**/*",
+    "test/**/*",
     "scripts/**/*",
     "next.config.ts",
     "next-env.d.ts"
-  ]
+  ],
+  "exclude": [".claude/skills/**/*", ".codex/skills/**/*"]
 }
