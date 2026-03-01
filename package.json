@@ -1,44 +1,4 @@
 {
-  "name": "template-typescript",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "build": "NODE_ENV=production bun run --bun next build",
-    "start": "bun run --bun next start",
-    "lint": "bunx --bun eslint",
-    "typecheck": "bunx --bun tsc --noEmit",
-    "test": "bunx vitest --no-file-parallelism",
-    "test:ui": "bunx vitest --ui --no-file-parallelism",
-    "test:run": "bunx vitest run --no-file-parallelism",
-    "test:coverage": "bunx vitest run --coverage --no-file-parallelism",
-    "format": "bunx prettier --write .",
-    "prepare": "husky"
-  },
-  "dependencies": {
-    "@dotenvx/dotenvx": "^1.52.0",
-    "@tanstack/react-query": "^5.90.19",
-    "@trpc/client": "^11.8.1",
-    "@trpc/next": "^11.8.1",
-    "@trpc/react-query": "^11.8.1",
-    "@trpc/server": "^11.8.1",
-    "@types/pino": "^7.0.5",
-    "commander": "^14.0.3",
-    "next": "16.1.6",
-    "pino": "^10.2.1",
-    "react": "19.2.4",
-    "react-dom": "19.2.4",
-    "superjson": "^2.2.6",
-    "zod": "^4.3.6"
-  },
-  "lint-staged": {
-    "*.{ts,tsx,js,jsx,mjs}": [
-      "prettier --write",
-      "eslint --fix"
-    ],
-    "*.{json,md,css}": [
-      "prettier --write"
-    ]
-  },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.18",
     "@testing-library/jest-dom": "^6.9.1",
@@ -73,5 +33,49 @@
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.55.0",
     "vitest": "^4.0.18"
+  },
+  "dependencies": {
+    "@dotenvx/dotenvx": "^1.52.0",
+    "@tanstack/react-query": "^5.90.19",
+    "@trpc/client": "^11.8.1",
+    "@trpc/next": "^11.8.1",
+    "@trpc/react-query": "^11.8.1",
+    "@trpc/server": "^11.8.1",
+    "@types/pino": "^7.0.5",
+    "commander": "^14.0.3",
+    "next": "16.1.6",
+    "pino": "^10.2.1",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
+    "superjson": "^2.2.6",
+    "zod": "^4.3.6"
+  },
+  "scripts": {
+    "build": "NODE_ENV=production bun run --bun next build",
+    "start": "bun run --bun next start",
+    "lint": "bunx --bun eslint",
+    "typecheck": "bunx --bun tsc --noEmit",
+    "test": "bunx vitest --no-file-parallelism",
+    "test:ui": "bunx vitest --ui --no-file-parallelism",
+    "test:run": "bunx vitest run --no-file-parallelism",
+    "test:coverage": "bunx vitest run --coverage --no-file-parallelism",
+    "format": "bunx prettier --write .",
+    "prepare": "husky",
+    "test:changed": "dotenvx run -f .env.test.local  -- bunx vitest run --changed",
+    "studio": "dotenvx run -- bun run scripts/studio.ts",
+    "format:check": "bunx --bun prettier --check .",
+    "stryker": "dotenvx run -f .env.test.local -- bunx stryker run"
+  },
+  "name": "template-typescript",
+  "version": "0.1.0",
+  "private": true,
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx,mjs}": [
+      "prettier --write",
+      "eslint --fix"
+    ],
+    "*.{json,md,css}": [
+      "prettier --write"
+    ]
   }
 }

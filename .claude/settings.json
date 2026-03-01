@@ -1,0 +1,8 @@
+{
+  "hooks": {},
+  "enabledPlugins": {
+    "double-shot-latte@superpowers-marketplace": true,
+    "superpowers@superpowers-marketplace": true,
+    "episodic-memory@superpowers-marketplace": true
+  }
+}
